@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <br /><br />
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>
+            First Name:<br />
+        </label>
+
+        <input type="text" name="Firstname" id="Firstname" /><br /><br />
+        <label>
+            Last name :<br />
+        </label>
+        <input type="text" name="Lastname" id="Lastname" /><br />
+        <br />
+        <div>File Frormat</div>
+        <label for="chkRecord">
+            <input type="radio" id="chkRecord" name="chkFile" /> Record
+        </label>
+        <label for="chkUpload">
+            <input type="radio" id="chkUpload" name="chkFile" /> Upload
+        </label>
+        <hr>
+  
+        <canvas class="visualizer" height="60px" id="sound"></canvas>
+        <div id="dvRecord" style="display: none">
+            Record Audio:
+            <button class="record">Record</button>
+            <button class="stop">Stop</button>
+            <p>
+                <audio id=recordedAudio></audio>
+
+            </p>
+            
+        </div>
+
+   
+        <section class="sound-clips" >
+          
+</section>
+ 
+
+        <div id="dvUpload" style="display: none">
+            Upload File:
+            @Html.TextBox("UploadFile", "", new { type = "file" })<br />
+
+            <input type="submit" id="SaveUpload" value="Save Upload File" name="button" />
+        </div>
+    }
+</div>
+@ViewBag.message
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js">
+</script>
+<script src="~/Scripts/app.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("input[name=chkFile]").click(function () {
+
+            if ($("#chkRecord").is(':checked')) {
+                $("#dvRecord").show();
+                $("#SaveRecord").show();
+                $("#sound").show();
+                $("#dvUpload").hide();
+                $("#SaveUpload").hide();
+            } else if ($("#chkUpload").is(':checked')) {
+                $("#dvRecord").hide();
+                $("#SaveRecord").hide();
+                $("#sound").hide();
+                $("#dvUpload").show();
+                $("#SaveUpload").show();
+            }
+        });
+
+        //    $('#SaveUpload').click(function () {
+
+        //     var Firstname = $('#Firstname').val()
+        //    var Lastname = $('#Lastname').val()
+        //   var Record = $('#SaveRecord').val()
+        //  var Upload = $('#UploadFile').val()
+
+        //  alert(Firstname)
+        // alert(Lastname)
+        // alert(Record)
+        //  alert(Upload)
+
+        //   $.ajax({
+        //       async: false,
+        //      cache: false,
+        //       type: "POST",
+        //       dataType: "json",
+        //       url: $("#urlPost").val(),
+        //     data: { "Firstname": Firstname, "Lastname": Lastname, "SaveRecord": Record, "UploadFile": Upload },
+        //     success: function (data) {
+
+        //      alert(data);
+
+        //      },
+        //       error: function (x, e) {
+        //           alert("The call to the server side. " + x.responseText);
+        //       }
+        //   });
+        //});
+
+    });
+
+</script>

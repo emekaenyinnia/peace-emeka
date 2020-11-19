@@ -1,0 +1,72 @@
+﻿@model  AppFiles.Models.ViewRecords
+@{
+    ViewBag.Title = "All Items";
+}
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Click on view details beside each item to load its details from the database.</p>
+
+<table class="table" id="datatable">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            Name
+        </th>
+
+        <th>
+            Play
+        </th>
+        <th>
+            Download
+        </th>
+        <th>
+            Delete
+        </th>
+    </tr>
+
+    @foreach (var i in Model.UsersList)
+    {
+        <tr>
+            <td>
+                @i.Firstname
+            </td>
+            <td>
+                @i.Lastname
+            </td>
+            <td>
+                @i.Name
+            </td>
+            <td>
+                <audio controls>
+                    <source src="@Url.Content(@i.FilePath)" type="audio/mp3"/>
+                </audio>
+            </td>
+
+           
+            <td id="">
+                @Html.ActionLink("Download file", "Downloadfile", new { Name = i.Name })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = i.Id })
+            </td>
+        </tr>
+    }
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+
+        $("audio").on("play", function () {
+            $("audio").not(this).each(function (index, audio) {
+                audio.pause();
+            });
+        });
+    });
+</script>  

@@ -1,0 +1,64 @@
+﻿
+@model AppFiles.Models.FileFormat
+@{
+    ViewBag.Title = "Details";
+   
+}
+
+<h2>Details</h2>
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Voter</legend>
+    <div class="display-label">Id</div>
+    <div class="display-field">@Model.Id</div>
+
+    <div class="display-label">First Name</div>
+    <div class="display-field">@Model.Firstname</div>
+    <div class="display-label">Last Name</div>
+    <div class="display-field">@Model.Lastname</div>
+
+    <div class="display-label">File Name</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">File Path</div>
+    <div class="display-field">@Model.FilePath</div>
+
+</fieldset>
+
+@using (Html.BeginForm())
+{
+
+    <p>
+        <input type="submit" id="Delete" value="Delete" />
+        @Html.ActionLink("Back to List", "ViewFiles")
+    </p>
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+@Html.Hidden("urlPost", Url.Action("DeleteUser", "Home"))
+<script>
+    $(function () {
+        $('#Delete').click(function () {
+            //First assign variables
+            var Id = $('#Id').val()
+
+
+            $.ajax({
+                async: false,
+                cache: false,
+                type: "POST",
+                dataType: "json",
+                url: $("#urlPost").val(),
+                data: { "Id": Id },
+                success: function (data) {
+                    alert(data);
+
+                },
+                error: function (x, e) {
+                    alert("The call to the server side failed. " + x.responseText);
+                }
+            });
+        });
+    });
+</script>
